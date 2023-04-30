@@ -10,7 +10,8 @@ final BorderRadius kRadius30 = BorderRadius.circular(30);
 //main image
 const kMainImage =
     "https://www.themoviedb.org/t/p/w220_and_h330_face/dBxxtfhC4vYrxB2fLsSxOTY2dQc.jpg";
-
+const newAndHotTempImage =
+    'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/8P15FsYcTwQZ4G5rRMd1TKD14Aq.jpg';
 //textstyle
 TextStyle kHomeTileText = const TextStyle(
   fontSize: 14,

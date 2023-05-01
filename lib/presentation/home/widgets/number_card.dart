@@ -7,9 +7,10 @@ class NumberCard extends StatelessWidget {
   const NumberCard({
     super.key,
     required this.index,
+    required this.filmCode,
   });
   final int index;
-
+  final String filmCode;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -22,10 +23,10 @@ class NumberCard extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 borderRadius: kRadius10,
-                image: const DecorationImage(
+                image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    "https://www.themoviedb.org/t/p/w220_and_h330_face/daSFbrt8QCXV2hSwB0hqYjbj681.jpg",
+                    "https://www.themoviedb.org/t/p/w500$filmCode",
                   ),
                 ),
               ),

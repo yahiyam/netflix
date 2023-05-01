@@ -32,15 +32,29 @@ class ScreenHome extends StatelessWidget {
                   children: const [
                     BackgroundCard(),
                     kHeight,
-                    MainTitleCard(title: 'Released in the past year'),
+                    MainTitleCard(
+                      title: 'Released in the past year',
+                      type: 'top_rated',
+                    ),
                     kHeight,
-                    MainTitleCard(title: 'Treanding Now'),
+                    MainTitleCard(
+                      title: 'Treanding Now',
+                      type: 'popular',
+                    ),
                     kHeight,
-                    NumberTitleCard(),
+                    NumberTitleCard(
+                      
+                    ),
                     kHeight,
-                    MainTitleCard(title: 'Tense Dramas'),
+                    MainTitleCard(
+                      title: 'Tense Dramas',
+                      type: 'upcoming',
+                    ),
                     kHeight,
-                    MainTitleCard(title: 'South Indian Cinema'),
+                    MainTitleCard(
+                      title: 'Now in Cinemas',
+                      type: 'now_playing',
+                    ),
                     kHeight,
                   ],
                 ),

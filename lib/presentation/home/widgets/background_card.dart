@@ -1,26 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/api/api_service.dart';
 
 import '../../../core/colors/colors.dart';
-import '../../../core/constants.dart';
 import 'custom_button_widget.dart';
 
-class BackgroundCard extends StatelessWidget {
-  const BackgroundCard({super.key});
+class BackgroundCard extends StatefulWidget {
+  const BackgroundCard({Key? key}) : super(key: key);
+
+  @override
+  State<BackgroundCard> createState() => _BackgroundCardState();
+}
+
+class _BackgroundCardState extends State<BackgroundCard> {
+  String? posterUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchMoviePoster();
+  }
+
+  Future<void> _fetchMoviePoster() async {
+    final movies = await TmdbApi.fetchMoviesByType('movie', 'popular');
+    posterUrl = movies.first.posterPath;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          width: double.infinity,
-          height: 600,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(kMainImage),
-              fit: BoxFit.cover
-            ),
-          ),
-        ),
+        posterUrl == null
+            ? const SizedBox()
+            : Container(
+                width: double.infinity,
+                height: 600,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      "https://image.tmdb.org/t/p/w500$posterUrl",
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
         Positioned(
           bottom: 0,
           right: 0,

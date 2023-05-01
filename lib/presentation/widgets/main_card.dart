@@ -5,7 +5,9 @@ import '../../core/constants.dart';
 class MainCard extends StatelessWidget {
   const MainCard({
     super.key,
+    required this.filmCode,
   });
+  final String filmCode;
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +17,10 @@ class MainCard extends StatelessWidget {
       height: 250,
       decoration: BoxDecoration(
         borderRadius: kRadius10,
-        image: const DecorationImage(
+        image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(
-            "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/ngl2FKBlU4fhbdsrtdom9LVLBXw.jpg",
+            "https://www.themoviedb.org/t/p/w500$filmCode",
           ),
         ),
       ),

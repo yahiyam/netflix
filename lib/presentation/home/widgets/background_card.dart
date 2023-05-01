@@ -17,6 +17,7 @@ class BackgroundCard extends StatelessWidget {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(kMainImage),
+              fit: BoxFit.cover
             ),
           ),
         ),

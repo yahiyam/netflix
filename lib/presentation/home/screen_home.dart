@@ -55,7 +55,7 @@ class ScreenHome extends StatelessWidget {
                             Row(
                               children: [
                                 Image.network(
-                                  kMainImage,
+                                  kNetflixImage,
                                   width: 60,
                                   height: 60,
                                 ),

@@ -4,11 +4,17 @@ import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants.dart';
 import 'package:netflix/presentation/search/widget/title.dart';
 
+import '../../../api/model.dart';
+
 const imageUrl =
     'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/8P15FsYcTwQZ4G5rRMd1TKD14Aq.jpg';
 
 class SearchIdleWidget extends StatelessWidget {
-  const SearchIdleWidget({super.key});
+  const SearchIdleWidget({
+    super.key,
+    required this.suggestions,
+  });
+  final List<Result> suggestions;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +25,9 @@ class SearchIdleWidget extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             shrinkWrap: true,
-            itemBuilder: (context, index) => const TopSearchItemTile(),
+            itemBuilder: (context, index) => TopSearchItemTile(
+              suggestion: suggestions[index],
+            ),
             separatorBuilder: (context, index) => kHeight20,
             itemCount: 10,
           ),
@@ -30,7 +38,11 @@ class SearchIdleWidget extends StatelessWidget {
 }
 
 class TopSearchItemTile extends StatelessWidget {
-  const TopSearchItemTile({super.key});
+  const TopSearchItemTile({
+    super.key,
+    required this.suggestion,
+  });
+  final Result suggestion;
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +52,19 @@ class TopSearchItemTile extends StatelessWidget {
         Container(
           width: screenWidth * 0.35,
           height: 65,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(imageUrl),
+              image: NetworkImage(
+                "https://www.themoviedb.org/t/p/original${suggestion.posterPath}",
+              ),
               fit: BoxFit.cover,
             ),
           ),
         ),
-        const Expanded(
+        Expanded(
           child: Text(
-            'Movie name',
-            style: TextStyle(
+            suggestion.title!,
+            style: const TextStyle(
               color: kWhiteColor,
               fontWeight: FontWeight.bold,
               fontSize: 16,

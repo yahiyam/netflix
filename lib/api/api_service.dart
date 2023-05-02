@@ -32,22 +32,24 @@ class TmdbApi {
     }
   }
 
-  static Future<MovieDatas> searchMovies(String query) async {
+  static Future<List<Result>> getSearchSuggestions(String query) async {
     final response = await http.get(
       Uri.parse(
-        "$baseUrl/search/movie?api_key=$apiKey&query=$query",
+        '$baseUrl/search/movie?api_key=$apiKey&query=$query',
       ),
     );
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return MovieDatas.fromJson(data);
+      List<Result> suggestions = [];
+      for (var result in data["results"]) {
+        suggestions.add(
+          Result.fromJson(result),
+        );
+      }
+      return suggestions;
     } else {
-      throw Exception("Failed to search movies");
+      throw Exception("Failed to fetch search suggestions");
     }
-  }
-
-  static String getPosterImageUrl(String path) {
-    return 'https://image.tmdb.org/t/p/w500$path';
   }
 }

@@ -32,6 +32,21 @@ class TmdbApi {
     }
   }
 
+  static Future<MovieDatas> searchMovies(String query) async {
+    final response = await http.get(
+      Uri.parse(
+        "$baseUrl/search/movie?api_key=$apiKey&query=$query",
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return MovieDatas.fromJson(data);
+    } else {
+      throw Exception("Failed to search movies");
+    }
+  }
+
   static String getPosterImageUrl(String path) {
     return 'https://image.tmdb.org/t/p/w500$path';
   }

@@ -3,6 +3,8 @@ import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/coming_soon_widget.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/everyones_watching_widget.dart';
 
+import '../../api/api_service.dart';
+import '../../api/model.dart';
 import '../../core/constants.dart';
 
 class ScreenNewAndHot extends StatelessWidget {
@@ -24,17 +26,21 @@ class ScreenNewAndHot extends StatelessWidget {
               ),
             ),
             actions: [
-              const Icon(
-                Icons.cast,
-                color: Colors.white,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.cast,
+                    color: Colors.white,
+                  ),
+                  kWidth,
+                  Container(
+                    height: 30,
+                    width: 30,
+                    color: Colors.blue,
+                  ),
+                  kWidth,
+                ],
               ),
-              kWidth,
-              Container(
-                height: 30,
-                width: 30,
-                color: Colors.blue,
-              ),
-              kWidth,
             ],
             bottom: TabBar(
               isScrollable: true,
@@ -71,19 +77,73 @@ class ScreenNewAndHot extends StatelessWidget {
 }
 
 Widget _buildEveryonesWatching() {
-  return ListView.builder(
-    itemCount: 9,
-    itemBuilder: (BuildContext context, int index) {
-      return const EveryonesWatchingWidget();
+  return FutureBuilder<List<Result>>(
+    future: TmdbApi.fetchMoviesByType('movie', "popular"),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final movies = snapshot.data!;
+        return ListView.builder(
+          // scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return EveryonesWatchingWidget(
+              filmCode: movies[index],
+            );
+          },
+          itemCount: movies.length,
+        );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text(
+            "Failed to fetch movies: ${snapshot.error}",
+          ),
+        );
+      } else {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
     },
   );
+  // return ListView.builder(
+  //   itemCount: 9,
+  //   itemBuilder: (BuildContext context, int index) {
+  //     return const EveryonesWatchingWidget();
+  //   },
+  // );
 }
 
 Widget _buildComingSoon() {
-  return ListView.builder(
-    itemBuilder: (context, index) {
-      return const ComingSoonWidget();
+  return FutureBuilder<List<Result>>(
+    future: TmdbApi.fetchMoviesByType('tv', "popular"),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final movies = snapshot.data!;
+        return ListView.builder(
+          // scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return ComingSoonWidget(
+              filmCode: movies[index],
+            );
+          },
+          itemCount: movies.length,
+        );
+      } else if (snapshot.hasError) {
+        return Center(
+          child: Text(
+            "Failed to fetch movies: ${snapshot.error}",
+          ),
+        );
+      } else {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
     },
-    itemCount: 10,
   );
+  // return ListView.builder(
+  //   itemBuilder: (context, index) {
+  //     return const ComingSoonWidget();
+  //   },
+  //   itemCount: 10,
+  // );
 }

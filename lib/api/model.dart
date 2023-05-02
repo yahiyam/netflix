@@ -44,21 +44,29 @@ class MovieDatas {
 
 class Result {
   int? id;
+  String? title;
   String? originalTitle;
   String? overview;
   String? posterPath;
+  DateTime? releaseDate;
   Result({
     this.id,
     this.originalTitle,
     this.overview,
     this.posterPath,
+    this.releaseDate,
+    this.title,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-        id: json["id"] ??= '',
-        originalTitle: json["original_title"] ?? '',
-        overview: json["overview"] ?? '',
-        posterPath: json["poster_path"] ?? '',
+        id: json["id"] ?? "",
+        originalTitle: json["original_title"] ?? "",
+        overview: json["overview"] ?? "",
+        posterPath: json["poster_path"] ?? "",
+        releaseDate: json["release_date"] == null
+            ? null
+            : DateTime.parse(json["release_date"]),
+        title: json["title"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +74,9 @@ class Result {
         "original_title": originalTitle,
         "overview": overview,
         "poster_path": posterPath,
+        "release_date":
+            "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
+        "title": title,
       };
 }
 

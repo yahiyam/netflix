@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../api/model.dart';
 import '../../../core/colors/colors.dart';
 import '../../../core/constants.dart';
 import '../../home/widgets/custom_button_widget.dart';
@@ -8,7 +9,9 @@ import '../../widgets/video_widget.dart';
 class ComingSoonWidget extends StatelessWidget {
   const ComingSoonWidget({
     super.key,
+    required this.filmCode,
   });
+  final Result filmCode;
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +49,24 @@ class ComingSoonWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const VideoWidget(),
+              VideoWidget(
+                filmCode: filmCode.posterPath!,
+              ),
               Row(
                 children: [
-                  const Text(
-                    "TALL GIRL 2",
-                    style: TextStyle(
-                      letterSpacing: -5,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  //     Text(
+                  //       filmCode.originalTitle!,
+                  //       style: const TextStyle(
+                  //         letterSpacing: -5,
+                  //         fontSize: 35,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
                   const Spacer(),
                   Row(
                     children: const [
                       CustomButtonWidget(
-                        icon: Icons.blender_outlined,
+                        icon: Icons.notifications,
                         title: "Remind Me",
                         iconSize: 20,
                         textSize: 10,
@@ -75,23 +80,25 @@ class ComingSoonWidget extends StatelessWidget {
                       ),
                       kWidth,
                     ],
-                  )
+                  ),
                 ],
               ),
               kHeight,
               const Text("Coming on Friday"),
               kHeight,
-              const Text(
-                "Tall Girl 2",
-                style: TextStyle(
+              Text(
+                filmCode.originalTitle!,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               kHeight,
-              const Text(
-                "Captured and imprisoned by the Last Men, a very special deer boy named Gus takes action to help his newfound hybrid friends escape before it's too late.",
-                style: TextStyle(
+              Text(
+                filmCode.overview!,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
                   color: kGreyColor,
                 ),
               ),

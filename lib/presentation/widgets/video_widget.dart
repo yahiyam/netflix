@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../core/colors/colors.dart';
-import '../../core/constants.dart';
 
 class VideoWidget extends StatelessWidget {
   const VideoWidget({
     super.key,
+    required this.filmCode,
   });
+  final String filmCode;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class VideoWidget extends StatelessWidget {
           width: double.infinity,
           height: 200,
           child: Image.network(
-            newAndHotTempImage,
-            fit: BoxFit.cover,
+            "https://www.themoviedb.org/t/p/original$filmCode",
+            fit: BoxFit.fitWidth,
           ),
         ),
         Positioned(

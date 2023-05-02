@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/api/model.dart';
 
 import '../../../core/colors/colors.dart';
 import '../../../core/constants.dart';
@@ -8,30 +9,35 @@ import '../../widgets/video_widget.dart';
 class EveryonesWatchingWidget extends StatelessWidget {
   const EveryonesWatchingWidget({
     super.key,
+    required this.filmCode,
   });
-
+  final Result filmCode;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         kHeight,
-        const Text(
-          "Friends",
-          style: TextStyle(
+        Text(
+          filmCode.originalTitle!,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
+            color: kWhiteColor,
           ),
         ),
         kHeight,
-        const Text(
-          "Captured and imprisoned by the Last Men, a very special deer boy named Gus takes action to help his newfound hybrid friends escape before it's too late.",
-          style: TextStyle(
+        Text(
+          filmCode.overview!,
+          style: const TextStyle(
             color: kGreyColor,
           ),
         ),
         kHeight50,
-        const VideoWidget(),
+        VideoWidget(
+          filmCode: filmCode.posterPath!,
+        ),
         kHeight,
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
